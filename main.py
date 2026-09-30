@@ -24,6 +24,8 @@ def main():
                 engine.handle_click(event.pos)
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                 engine.reset()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_b:
+                engine.load_demo()
 
         engine.update()
         engine.render(screen)

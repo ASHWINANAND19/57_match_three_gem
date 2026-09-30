@@ -34,7 +34,9 @@ pip install pygame
 python main.py
 ```
 
-**Controls:** Left-click two adjacent gems to swap them. Press R to restart.
+**Controls:** Left-click two adjacent gems to swap them. Press R to restart. Press B to load a demo board (a ready 4-in-a-row and a ready Bomb Gem match).
+
+> On Python 3.14 the classic `pygame` wheel may fail to build; `pip install pygame-ce` is a drop-in replacement (`import pygame` still works).
 
 
 ## Tasks to Complete
@@ -58,6 +60,17 @@ In match-3 games, matching 4 gems of the same color typically creates an enhance
 If a player stays idle without clicking for more than 5 seconds, find a valid pair of adjacent gems that would produce a match if swapped, and render a pulsing outline or shimmer over those two gems to provide a gentle hint.
 
 ---
+
+## Lab 4 Changes (completed)
+
+| Item | What was done |
+|---|---|
+| **Hidden crash** | `drop_and_refill()` was missing its `for c in range(GRID_SIZE):` loop, so the game crashed on launch with `NameError: name 'c' is not defined`. Loop restored. The board is now generated with no ready-made matches and at least one valid move. |
+| **Task 1** | `process_swap()` only decrements `moves_remaining` after a swap produces a match. Invalid swaps revert for free. |
+| **Task 2** | `resolve_matches()` counts cascade levels and pays `10 x gems x level` (1x, 2x, 3x...). A `COMBO xN! +points` banner appears under the HUD. |
+| **Task 3** | `find_runs()` finds maximal runs; a run of 4+ turns one gem (the swapped one if possible) into a glowing **Bomb Gem**. A horizontal run gives a row bomb (↔) and a vertical run gives a column bomb (↕). When a bomb is matched it clears its whole row/column, and bombs caught in a blast chain-detonate. |
+| **Task 4** | After 5 s without a click, `find_hint()` locates a valid swap and the two gems get a pulsing golden outline. Any click hides it. |
+| Extras | Refilling gems are clipped to the board, the board reshuffles if no valid moves remain, `[B]` demo board, headless tests in `tests/test_board.py` (`python tests/test_board.py`). |
 
 ## Expected Behavior
 
